@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Secrets
+.env
+
+# Data (re-created by the pipeline)
+data/raw/*
+!data/raw/.gitkeep
+data/*.duckdb
+data/*.duckdb.wal
+
+# dbt
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+
+# OS
+.DS_Store
