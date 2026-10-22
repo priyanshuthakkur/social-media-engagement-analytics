@@ -1,0 +1,11 @@
+# Channels to analyse, by YouTube handle (the @name in the channel URL).
+# Pick one niche so comparisons are fair. These are UK fitness & nutrition brands —
+# open each https://www.youtube.com/@handle in a browser to check it exists before running.
+niche: "UK fitness & nutrition brands"
+max_videos_per_channel: 300
+channels:
+  - "@Gymshark"
+  - "@Myprotein"
+  - "@BULKCOMMUNITY"
+  - "@TheProteinWorks"
+  - "@huel"
