@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: fct_video_engagement
+    description: One row per video with engagement metrics. The main table for analysis.
+    columns:
+      - name: video_id
+        tests:
+          - unique
+          - not_null
+      - name: channel_title
+        description: Every video should match a channel in the same snapshot.
+        tests:
+          - not_null
+      - name: engagement_rate
+        description: (likes + comments) / views. Null when likes or comments are hidden, or views are 0.
+      - name: like_rate
+        description: likes / views. Null when likes are hidden.
+      - name: comment_rate
+        description: comments / views. Null when comments are off.
+      - name: views_per_day
+        description: Views divided by days since upload (minimum 1 day).
+      - name: is_mature
+        description: True when the video is old enough (see min_video_age_days) for its numbers to settle.
+        tests:
+          - not_null
+
+  - name: agg_engagement_by_format
+    description: Median engagement for Shorts vs long-form, per channel (mature videos only).
+    columns:
+      - name: video_format
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["short", "long_form"]
+
+  - name: agg_engagement_by_posting_time
+    description: Median engagement by UK weekday and part of the day, per format (mature videos only).
+    columns:
+      - name: video_count
+        description: Number of videos behind each median. Treat slots with few videos with caution.
