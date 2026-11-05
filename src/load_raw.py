@@ -92,7 +92,7 @@ def latest_snapshot(raw_dir: str = RAW_DIR) -> str:
 
 
 def main() -> None:
-    import duckdb  # imported here so the tests above don't need it installed
+    import duckdb  # imported here so the tests (which only use the flatten functions) don't need it
 
     snapshot = latest_snapshot()
     folder = os.path.join(RAW_DIR, snapshot)

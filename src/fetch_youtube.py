@@ -17,6 +17,7 @@ Usage:
 """
 import json
 import os
+import time
 from datetime import date
 
 import requests
@@ -28,17 +29,37 @@ CONFIG_PATH = "config/channels.yml"
 RAW_DIR = "data/raw"
 BATCH_SIZE = 50  # max ids per videos.list call
 
+# Temporary problems worth retrying: rate limiting and server-side errors.
+# Anything else (e.g. 400 bad request, 403 quota exceeded) won't fix itself
+# by retrying, so it fails straight away.
+RETRY_STATUSES = {429, 500, 502, 503, 504}
+MAX_ATTEMPTS = 3
+BACKOFF_SECONDS = 2  # waits 2s, then 4s between attempts
+
 
 def api_get(endpoint: str, params: dict, api_key: str) -> dict:
-    """Call one YouTube API endpoint and fail loudly on errors."""
-    response = requests.get(
-        f"{API_URL}/{endpoint}", params={**params, "key": api_key}, timeout=30
-    )
-    if response.status_code != 200:
-        raise RuntimeError(
-            f"YouTube API error {response.status_code} on {endpoint}: {response.text[:300]}"
-        )
-    return response.json()
+    """Call one YouTube API endpoint, retrying temporary failures, and fail loudly otherwise."""
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        try:
+            response = requests.get(
+                f"{API_URL}/{endpoint}", params={**params, "key": api_key}, timeout=30
+            )
+        except (requests.ConnectionError, requests.Timeout) as error:
+            if attempt == MAX_ATTEMPTS:
+                raise RuntimeError(
+                    f"Could not reach the YouTube API on {endpoint} after {MAX_ATTEMPTS} attempts"
+                ) from error
+        else:
+            if response.status_code == 200:
+                return response.json()
+            if response.status_code not in RETRY_STATUSES or attempt == MAX_ATTEMPTS:
+                raise RuntimeError(
+                    f"YouTube API error {response.status_code} on {endpoint}: {response.text[:300]}"
+                )
+        wait = BACKOFF_SECONDS * 2 ** (attempt - 1)
+        print(f"  ...temporary problem on {endpoint}, retrying in {wait}s")
+        time.sleep(wait)
+    raise AssertionError("unreachable")
 
 
 def get_channel(handle: str, api_key: str) -> dict | None:

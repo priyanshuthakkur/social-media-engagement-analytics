@@ -4,9 +4,12 @@ key, network access or database is needed.
 
 Run with:  pytest
 """
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
-from src.fetch_youtube import chunk, get_upload_ids
+import pytest
+import requests
+
+from src.fetch_youtube import api_get, chunk, get_upload_ids
 from src.load_raw import flatten_channels, flatten_videos, parse_duration
 
 MOCK_CHANNEL = {
@@ -91,3 +94,45 @@ def test_get_upload_ids_follows_pagination_and_respects_limit():
     assert len(ids) == 70
     assert ids[0] == "a0" and ids[-1] == "b19"
     assert mock_get.call_count == 2
+
+
+def fake_response(status: int, payload: dict | None = None) -> MagicMock:
+    response = MagicMock(status_code=status, text="error details")
+    response.json.return_value = payload or {}
+    return response
+
+
+@patch("src.fetch_youtube.time.sleep")
+def test_api_get_retries_temporary_errors_then_succeeds(mock_sleep):
+    responses = [fake_response(503), fake_response(200, {"items": ["ok"]})]
+    with patch("src.fetch_youtube.requests.get", side_effect=responses) as mock_get:
+        data = api_get("videos", {}, api_key="fake")
+    assert data == {"items": ["ok"]}
+    assert mock_get.call_count == 2
+    mock_sleep.assert_called_once_with(2)
+
+
+@patch("src.fetch_youtube.time.sleep")
+def test_api_get_retries_network_errors(mock_sleep):
+    side_effects = [requests.ConnectionError(), fake_response(200, {"items": []})]
+    with patch("src.fetch_youtube.requests.get", side_effect=side_effects):
+        assert api_get("videos", {}, api_key="fake") == {"items": []}
+
+
+@patch("src.fetch_youtube.time.sleep")
+def test_api_get_does_not_retry_permanent_errors(mock_sleep):
+    # 403 (e.g. quota exceeded) won't fix itself, so it should fail straight away
+    with patch("src.fetch_youtube.requests.get", return_value=fake_response(403)) as mock_get:
+        with pytest.raises(RuntimeError, match="403"):
+            api_get("videos", {}, api_key="fake")
+    assert mock_get.call_count == 1
+    mock_sleep.assert_not_called()
+
+
+@patch("src.fetch_youtube.time.sleep")
+def test_api_get_gives_up_after_max_attempts(mock_sleep):
+    with patch("src.fetch_youtube.requests.get", return_value=fake_response(500)) as mock_get:
+        with pytest.raises(RuntimeError, match="500"):
+            api_get("videos", {}, api_key="fake")
+    assert mock_get.call_count == 3
+    assert [c.args[0] for c in mock_sleep.call_args_list] == [2, 4]

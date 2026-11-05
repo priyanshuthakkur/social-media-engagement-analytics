@@ -22,6 +22,8 @@ fetch_youtube.py  ─▶  load_raw.py  ─▶  dbt models   ─▶  analysis    
 
 ## Getting started
 
+Requires Python 3.10 or newer.
+
 ```bash
 git clone https://github.com/priyanshuthakkur/social-media-engagement-analytics.git
 cd social-media-engagement-analytics
