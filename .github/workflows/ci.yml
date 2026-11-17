@@ -1,0 +1,38 @@
+name: CI
+
+# On every push and pull request: run the unit tests, build a small warehouse
+# from the made-up sample snapshot, then build and test every dbt model on it.
+# No API key needed.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build sample warehouse
+        run: python scripts/build_sample_db.py
+
+      - name: Build and test dbt models
+        working-directory: dbt
+        run: dbt build --profiles-dir .
+
+      - name: Run tests (unit + model outputs)
+        run: pytest -v

@@ -1,5 +1,7 @@
 # Social Media Engagement Analytics
 
+[![CI](https://github.com/priyanshuthakkur/social-media-engagement-analytics/actions/workflows/ci.yml/badge.svg)](https://github.com/priyanshuthakkur/social-media-engagement-analytics/actions/workflows/ci.yml)
+
 **Work in progress.** An end-to-end analytics engineering project on YouTube data from
 UK fitness & nutrition brands. It asks the questions a social media team cares about:
 **what content drives engagement, and when should we post?**
@@ -18,7 +20,9 @@ fetch_youtube.py  ─▶  load_raw.py  ─▶  dbt models   ─▶  analysis    
 | 1. Ingestion: YouTube API to raw JSON snapshots to DuckDB | ✅ Done |
 | 2. dbt models: staging, engagement metrics, data tests | ✅ Done |
 | 3. Statistical analysis | ⏳ Next |
-| 4. Streamlit dashboard + GitHub Actions CI | ⏳ Planned |
+| 4. Streamlit dashboard | ⏳ Planned |
+
+Every push runs in CI: unit tests, then the dbt models are built and tested on a small sample dataset.
 
 ## Getting started
 
@@ -35,6 +39,15 @@ cp .env.example .env              # then paste your free YouTube Data API key in
 python run_ingest.py              # fetch + load into data/youtube.duckdb
 cd dbt && dbt build && cd ..      # build the models and run the data tests
 pytest                            # tests use mock data, no API key needed
+```
+
+**No API key?** Build everything from the made-up sample snapshot in
+`tests/fixtures/` instead (this is what CI does):
+
+```bash
+python scripts/build_sample_db.py
+cd dbt && dbt build && cd ..
+pytest                            # now also checks the models' outputs
 ```
 
 The channels analysed are listed in `config/channels.yml`. Change them to analyse any niche.

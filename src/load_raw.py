@@ -91,17 +91,18 @@ def latest_snapshot(raw_dir: str = RAW_DIR) -> str:
     return snapshots[-1]
 
 
-def main() -> None:
+def main(raw_dir: str = RAW_DIR, db_path: str = DB_PATH) -> None:
     import duckdb  # imported here so the tests (which only use the flatten functions) don't need it
 
-    snapshot = latest_snapshot()
-    folder = os.path.join(RAW_DIR, snapshot)
+    snapshot = latest_snapshot(raw_dir)
+    folder = os.path.join(raw_dir, snapshot)
     with open(os.path.join(folder, "channels.json")) as f:
         channels = flatten_channels(json.load(f), snapshot)
     with open(os.path.join(folder, "videos.json")) as f:
         videos = flatten_videos(json.load(f), snapshot)
 
-    con = duckdb.connect(DB_PATH)
+    os.makedirs(os.path.dirname(db_path) or ".", exist_ok=True)
+    con = duckdb.connect(db_path)
     try:
         con.execute("CREATE SCHEMA IF NOT EXISTS raw")
         con.register("channels_df", channels)
@@ -111,7 +112,7 @@ def main() -> None:
     finally:
         con.close()
 
-    print(f"Loaded snapshot {snapshot}: {len(channels)} channels, {len(videos)} videos -> {DB_PATH}")
+    print(f"Loaded snapshot {snapshot}: {len(channels)} channels, {len(videos)} videos -> {db_path}")
 
 
 if __name__ == "__main__":

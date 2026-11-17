@@ -1,0 +1,38 @@
+[
+  {
+    "id": "UCsample001",
+    "snippet": {
+      "title": "Sample Fitness Co",
+      "customUrl": "@samplefitness",
+      "country": "GB"
+    },
+    "statistics": {
+      "subscriberCount": "42000",
+      "viewCount": "3100000",
+      "videoCount": "6"
+    },
+    "contentDetails": {
+      "relatedPlaylists": {
+        "uploads": "UUsample001"
+      }
+    }
+  },
+  {
+    "id": "UCsample002",
+    "snippet": {
+      "title": "Sample Nutrition Ltd",
+      "customUrl": "@samplenutrition",
+      "country": "GB"
+    },
+    "statistics": {
+      "subscriberCount": "18500",
+      "viewCount": "950000",
+      "videoCount": "6"
+    },
+    "contentDetails": {
+      "relatedPlaylists": {
+        "uploads": "UUsample002"
+      }
+    }
+  }
+]
