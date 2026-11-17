@@ -1,0 +1,212 @@
+[
+  {
+    "id": "v01",
+    "snippet": {
+      "channelId": "UCsample001",
+      "title": "Full leg day routine",
+      "publishedAt": "2026-10-03T17:30:00Z",
+      "tags": [
+        "legs",
+        "workout"
+      ]
+    },
+    "contentDetails": {
+      "duration": "PT12M40S"
+    },
+    "statistics": {
+      "viewCount": "15400",
+      "likeCount": "610",
+      "commentCount": "48"
+    }
+  },
+  {
+    "id": "v02",
+    "snippet": {
+      "channelId": "UCsample001",
+      "title": "Protein myth in 30 seconds",
+      "publishedAt": "2026-10-05T07:15:00Z",
+      "tags": [
+        "shorts"
+      ]
+    },
+    "contentDetails": {
+      "duration": "PT32S"
+    },
+    "statistics": {
+      "viewCount": "48200",
+      "likeCount": "2900",
+      "commentCount": "61"
+    }
+  },
+  {
+    "id": "v03",
+    "snippet": {
+      "channelId": "UCsample001",
+      "title": "Gym bag essentials",
+      "publishedAt": "2026-10-10T12:00:00Z"
+    },
+    "contentDetails": {
+      "duration": "PT2M45S"
+    },
+    "statistics": {
+      "viewCount": "22100",
+      "likeCount": "1150",
+      "commentCount": "20"
+    }
+  },
+  {
+    "id": "v04",
+    "snippet": {
+      "channelId": "UCsample001",
+      "title": "Beginner push day",
+      "publishedAt": "2026-10-17T18:05:00Z",
+      "tags": [
+        "push"
+      ]
+    },
+    "contentDetails": {
+      "duration": "PT18M02S"
+    },
+    "statistics": {
+      "viewCount": "9800",
+      "commentCount": "35"
+    }
+  },
+  {
+    "id": "v05",
+    "snippet": {
+      "channelId": "UCsample001",
+      "title": "Live Q&A with our coaches",
+      "publishedAt": "2026-10-24T19:00:00Z"
+    },
+    "contentDetails": {
+      "duration": "P0D"
+    },
+    "statistics": {
+      "viewCount": "3100",
+      "likeCount": "90",
+      "commentCount": "12"
+    }
+  },
+  {
+    "id": "v06",
+    "snippet": {
+      "channelId": "UCsample001",
+      "title": "Next week's drop (premiere)",
+      "publishedAt": "2026-11-05T18:00:00Z"
+    },
+    "contentDetails": {
+      "duration": "PT0S"
+    },
+    "statistics": {}
+  },
+  {
+    "id": "v07",
+    "snippet": {
+      "channelId": "UCsample002",
+      "title": "High-protein breakfast ideas",
+      "publishedAt": "2026-10-02T08:00:00Z",
+      "tags": [
+        "recipes"
+      ]
+    },
+    "contentDetails": {
+      "duration": "PT9M10S"
+    },
+    "statistics": {
+      "viewCount": "7600",
+      "likeCount": "310",
+      "commentCount": "22"
+    }
+  },
+  {
+    "id": "v08",
+    "snippet": {
+      "channelId": "UCsample002",
+      "title": "Creatine explained",
+      "publishedAt": "2026-10-06T17:45:00Z",
+      "tags": [
+        "shorts",
+        "supplements"
+      ]
+    },
+    "contentDetails": {
+      "duration": "PT58S"
+    },
+    "statistics": {
+      "viewCount": "31900",
+      "likeCount": "1720",
+      "commentCount": "95"
+    }
+  },
+  {
+    "id": "v09",
+    "snippet": {
+      "channelId": "UCsample002",
+      "title": "What I eat in a day",
+      "publishedAt": "2026-10-12T12:30:00Z"
+    },
+    "contentDetails": {
+      "duration": "PT14M20S"
+    },
+    "statistics": {
+      "viewCount": "5400",
+      "likeCount": "205",
+      "commentCount": "18"
+    }
+  },
+  {
+    "id": "v10",
+    "snippet": {
+      "channelId": "UCsample002",
+      "title": "Shaker hack",
+      "publishedAt": "2026-10-19T07:40:00Z",
+      "tags": [
+        "shorts"
+      ]
+    },
+    "contentDetails": {
+      "duration": "PT21S"
+    },
+    "statistics": {
+      "viewCount": "26500",
+      "likeCount": "1405",
+      "commentCount": "30"
+    }
+  },
+  {
+    "id": "v11",
+    "snippet": {
+      "channelId": "UCsample002",
+      "title": "Meal prep Sunday",
+      "publishedAt": "2026-10-25T10:00:00Z",
+      "tags": [
+        "mealprep"
+      ]
+    },
+    "contentDetails": {
+      "duration": "PT22M05S"
+    },
+    "statistics": {
+      "viewCount": "4100",
+      "likeCount": "150",
+      "commentCount": "9"
+    }
+  },
+  {
+    "id": "v12",
+    "snippet": {
+      "channelId": "UCsample002",
+      "title": "Pre-workout taste test",
+      "publishedAt": "2026-10-29T18:20:00Z"
+    },
+    "contentDetails": {
+      "duration": "PT1M30S"
+    },
+    "statistics": {
+      "viewCount": "12800",
+      "likeCount": "640",
+      "commentCount": "27"
+    }
+  }
+]

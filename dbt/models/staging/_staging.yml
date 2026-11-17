@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: stg_youtube__channels
+    description: One row per channel, typed and renamed.
+    columns:
+      - name: channel_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_youtube__videos
+    description: >
+      One row per video, with UK posting time and a Short/long-form label
+      (approximated from duration and upload date).
+    columns:
+      - name: video_id
+        tests:
+          - unique
+          - not_null
+      - name: channel_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_youtube__channels')
+              field: channel_id
+      - name: video_format
+        description: short or long_form; null when the duration is unknown (e.g. live streams).
+        tests:
+          - accepted_values:
+              values: ["short", "long_form"]
+      - name: publish_daypart
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["morning (06-12)", "afternoon (12-17)", "evening (17-22)", "night (22-06)"]

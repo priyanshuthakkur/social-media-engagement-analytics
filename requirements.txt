@@ -3,4 +3,5 @@ python-dotenv>=1.0
 pyyaml>=6.0
 duckdb>=1.1
 pandas>=2.2
+dbt-duckdb>=1.9
 pytest>=8.0

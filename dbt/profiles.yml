@@ -1,0 +1,9 @@
+# Local DuckDB connection. Run dbt from inside this dbt/ folder so the
+# relative path below points at the database created by run_ingest.py.
+social_media_engagement:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ../data/youtube.duckdb
+      threads: 4

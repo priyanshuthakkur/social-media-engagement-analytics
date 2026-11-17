@@ -1,0 +1,29 @@
+name: social_media_engagement
+version: "1.0.0"
+config-version: 2
+profile: social_media_engagement
+
+model-paths: ["models"]
+test-paths: ["tests"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+vars:
+  # YouTube treats uploads of up to 60 seconds as Shorts, and up to 3 minutes
+  # for uploads from 15 Oct 2024 onwards. The API doesn't flag Shorts directly,
+  # so duration (plus upload date) is the standard approximation.
+  shorts_max_seconds_legacy: 60
+  shorts_max_seconds: 180
+  shorts_3min_start_date: "2024-10-15"
+  # Very new videos are still gathering views and likes, so their engagement
+  # isn't settled yet. Analysis marts only use videos at least this old.
+  min_video_age_days: 7
+
+models:
+  social_media_engagement:
+    staging:
+      +schema: staging
+      +materialized: view
+    marts:
+      +schema: marts
+      +materialized: table

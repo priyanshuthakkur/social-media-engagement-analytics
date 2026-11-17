@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: youtube
+    description: Raw YouTube Data API snapshots, loaded by src/load_raw.py.
+    schema: raw
+    tables:
+      - name: channels
+        description: One row per channel in the latest snapshot.
+        columns:
+          - name: channel_id
+            tests:
+              - unique
+              - not_null
+      - name: videos
+        description: One row per video in the latest snapshot. Counts are null when hidden.
+        columns:
+          - name: video_id
+            tests:
+              - unique
+              - not_null
